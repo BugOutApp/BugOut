@@ -1,55 +1,54 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require('mongoose');
 
 const ticketSchema = new Schema({
   ticketName: {
     type: String,
-    required: true
+    required: true,
   },
   description: {
     type: String,
-    required: true
+    required: true,
   },
   status: {
     type: String,
-    enum: ['new','open','in progress','closed'],
-    default: 'new'
+    enum: ['new', 'open', 'in progress', 'closed'],
+    default: 'new',
   },
   ticketType: {
     type: String,
-    enum: ['task','bug','request','other'],
-    required: true
+    enum: ['task', 'bug', 'request', 'other'],
+    required: true,
   },
   category: {
     type: String,
-    enum: ['frontend','backend','design','other'],
-    required: true
+    enum: ['frontend', 'backend', 'design', 'other'],
+    required: true,
   },
   createdBy: {
     type: this.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
   },
   assignedTo: {
     type: this.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
   },
   creationDate: Date,
   dueDate: Date,
-  lastUpdated: [ Date ],
+  lastUpdated: [Date],
   priority: {
     type: String,
-    enum: ['P0','P1','P2','P3']
+    enum: ['P0', 'P1', 'P2', 'P3'],
   },
   comments: [{
     user: {
       type: this.Schema.Types.ObjectId,
-      ref: 'User'
-    }, 
-    type: String
-  }]
-  
+      ref: 'User',
+    },
+    type: String,
+  }],
 
 });
 
-const User = model("Ticket", ticketSchema);
+const Ticket = model('Ticket', ticketSchema);
 
 module.exports = Ticket;
