@@ -28,7 +28,7 @@ const userSchema = new Schema({
     default: false,
   },
   myTickets: [{
-    type: this.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'Ticket',
   }],
 });
