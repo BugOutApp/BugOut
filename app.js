@@ -22,8 +22,8 @@ require('./config')(app);
 passport.use(
   new GoogleStrategy(
     {
-      clientID: '198247797907-6043ha3qdqn0rpu9htmph8lcmhfa3k0c.apps.googleusercontent.com',
-      clientSecret: '1ChcHPIng0LB963vfTqsgIIe',
+      clientID: process.env.GOOGLE_CLIENTID,
+      clientSecret: process.env.GOOGLE_CLIENTSECRET,
       callbackURL: '/auth/google/callback',
     },
     (accessToken, refreshToken, profile, done) => {
