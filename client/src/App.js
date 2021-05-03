@@ -1,12 +1,15 @@
 import './App.css';
+import { Route, BrowserRouter } from 'react-router-dom';
+import Login from './components/Login'
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>BugOut</h1>
-      </header>
+      <BrowserRouter>
+        <Route path="/login" component={Login}></Route>
+      </BrowserRouter>
     </div>
+    
   );
 }
 
