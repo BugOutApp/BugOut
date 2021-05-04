@@ -25,28 +25,31 @@ const ticketSchema = new Schema({
     required: true,
   },
   createdBy: {
-    type: this.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'User',
   },
   assignedTo: {
-    type: this.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'User',
   },
-  creationDate: Date,
+  // creationDate: Date,
   dueDate: Date,
-  lastUpdated: [Date],
+  // lastUpdated: [Date],
   priority: {
     type: String,
     enum: ['P0', 'P1', 'P2', 'P3'],
   },
   comments: [{
     user: {
-      type: this.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'User',
     },
     type: String,
   }],
 
+},
+{
+  timestamps: { createdAt: 'creationDate', updatedAt: 'updatedAt' },
 });
 
 const Ticket = model('Ticket', ticketSchema);
