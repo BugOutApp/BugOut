@@ -9,7 +9,6 @@ router.get('/', (req, res) => {
 });
 
 // You put the next routes here 👇
-// example: router.use("/auth", authRoutes)
 
 // get all tickets
 
