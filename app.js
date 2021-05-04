@@ -3,7 +3,6 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 const cors = require('cors');
 
-
 // ℹ️ Gets access to environment variables/settings
 // https://www.npmjs.com/package/dotenv
 require('dotenv/config');
@@ -15,7 +14,6 @@ require('./db');
 // https://www.npmjs.com/package/express
 
 const express = require('express');
-
 
 const app = express();
 
@@ -127,7 +125,6 @@ app.use(
 const admin = require('./routes/admin');
 
 app.use('/api', admin);
-
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require('./error-handling')(app);
