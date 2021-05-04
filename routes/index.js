@@ -3,7 +3,6 @@ const router = require('express').Router();
 const Ticket = require('../models/Ticket.model');
 // const User = require('../models/User.model');
 
-
 router.get('/', (req, res) => {
   res.json('All good in here');
 });
