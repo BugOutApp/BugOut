@@ -6,9 +6,10 @@ import Home from './components/Home';
 
 console.log('app loading')
 
-function App() {
-  const [user, setUser] = useState(this.props.user)
+function App(props) {
   
+  const [user, setUser] = useState(props.user)
+  console.log('App functional called')
   return (
     <div className="App">
     <h1>HELLO?</h1>

@@ -18,7 +18,7 @@ axios.get('/api/auth/loggedin')
       document.getElementById('root')
     );
   }).catch(error => {
-    console.log(error);
+    console.log(error)
   })
 
 // If you want to start measuring performance in your app, pass a function
