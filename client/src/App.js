@@ -1,28 +1,31 @@
 import { React, useState } from 'react';
 import './App.css';
 import { Route } from 'react-router-dom';
-// import Login from './components/Login'
-import Home from './components/Home';
+import Home from './components/Home'
+import Login from './components/Login'
+import Signup from './components/Signup';
 
 console.log('app loading')
 
-function App(props) {
-  
-  const [user, setUser] = useState(props.user)
-  console.log('App functional called')
+function App() {
+
+  // const [user, setUser] = useState(props.user)
+  // console.log(props.user)
   return (
     <div className="App">
-    <h1>HELLO?</h1>
+    {/* <h1>This is app.js</h1> */}
     <Route
         exact path = "/"
         compotent={Home}
-        user={user}
-        setUser={setUser}
       /> 
-        {/* <Route
+    <Route
         exact path="/login" 
         component={Login}
-        /> */}
+    />
+    <Route
+        exact path = "/signup"
+        compotent={Signup}
+      /> 
     </div>
     
   );
