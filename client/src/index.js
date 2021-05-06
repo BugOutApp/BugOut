@@ -6,6 +6,8 @@ import App from './App';
 import axios from 'axios';
 import reportWebVitals from './reportWebVitals';
 
+console.log('index loading')
+
 axios.get('/api/auth/loggedin')
   .then(response => {
     const user = response.data;
@@ -16,7 +18,7 @@ axios.get('/api/auth/loggedin')
       document.getElementById('root')
     );
   }).catch(error => {
-    console.log(error.response);
+    console.log(error);
   })
 
 // If you want to start measuring performance in your app, pass a function
