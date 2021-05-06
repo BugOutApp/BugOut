@@ -23,6 +23,7 @@
     "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
+    "commitizen": "^4.2.3",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^7.24.0",
     "eslint-config-airbnb": "^18.2.1",
