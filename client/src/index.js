@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
 import axios from 'axios';
+import reportWebVitals from './reportWebVitals';
 
 axios.get('/api/auth/loggedin')
   .then(response => {
@@ -15,9 +15,11 @@ axios.get('/api/auth/loggedin')
       </BrowserRouter>,
       document.getElementById('root')
     );
-  });
+  }).catch(error => {
+    console.log(error.response);
+  })
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+reportWebVitals(console.log);
