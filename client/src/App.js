@@ -1,19 +1,18 @@
 import { React, useState } from 'react';
 import './App.css';
-import { Route } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
+import UserNavbar from './components/UserNavbar'
 import Home from './components/Home'
 import Login from './components/Login'
 import Signup from './components/Signup';
 
-console.log('app loading')
+function App(props) {
 
-function App() {
-
-  // const [user, setUser] = useState(props.user)
+  const [user, setUser] = useState(props.user)
   // console.log(props.user)
   return (
     <div className="App">
-    {/* <h1>This is app.js</h1> */}
+    <Link>learn react</Link>
     <Route
         exact path = "/"
         component={Home}
