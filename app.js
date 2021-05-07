@@ -20,8 +20,17 @@ const app = express();
 // ℹ️ This function is getting exported from the config folder. It runs most middlewares
 require('./config')(app);
 
+app.use(
+  cors({
+    // this could be multiple domains/origins, but we will allow just our React app
+    origin: ['http://localhost:3000'],
+  }),
+);
+
 // session configuration
+
 const session = require('express-session');
+
 // session store using mongo
 const MongoStore = require('connect-mongo')(session);
 
@@ -44,10 +53,12 @@ app.use(
 // end of session configuration
 
 // passport configuration
+
 const User = require('./models/User.model');
 
 // we serialize only the `_id` field of the user to keep the information stored minimum
 passport.serializeUser((user, done) => {
+  // eslint-disable-next-line no-underscore-dangle
   done(null, user._id);
 });
 

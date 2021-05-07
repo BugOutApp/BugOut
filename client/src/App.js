@@ -5,6 +5,8 @@ import UserNavbar from './components/UserNavbar'
 import Home from './components/Home';
 import Login from './components/Login';
 import Signup from './components/Signup';
+import CreateTicket from './components/CreateTicket';
+import AllTickets from './components/AllTickets';
 
 console.log('app loading')
 
@@ -18,6 +20,7 @@ function App(props) {
         user={user}
         setUser={setUser} />
       <Route
+      <Route
         exact path = "/"
         component={Home}
       /> 
@@ -28,7 +31,15 @@ function App(props) {
       <Route
         exact path = "/signup"
         component={Signup}
+      />
+     <Route
+        exact path = '/tickets'
+        component={AllTickets}
       /> 
+    <Route 
+    exact path='/tickets/new'
+    component={CreateTicket}
+    />
     </div>
     
   );
