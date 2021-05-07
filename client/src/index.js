@@ -29,7 +29,7 @@ console.log('index loading')
 
   ReactDOM.render(
     <BrowserRouter>
-      <App user={{}} />
+      <App user={{name: 'Michael'}} />
     </BrowserRouter>,
     document.getElementById('root')
   );
