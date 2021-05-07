@@ -16,7 +16,7 @@ function App() {
     {/* <h1>This is app.js</h1> */}
     <Route
         exact path = "/"
-        compotent={Home}
+        component={Home}
       /> 
     <Route
         exact path="/login" 
@@ -24,7 +24,7 @@ function App() {
     />
     <Route
         exact path = "/signup"
-        compotent={Signup}
+        component={Signup}
       /> 
     </div>
     
