@@ -9,7 +9,7 @@ export default function Home() {
     <div class='body'>
     <h1>This is home.js</h1>
     <div class='homePageButtons'>
-    <Link to='/signup'>Signup</Link>
+    <Link to='/signup'>Signup</Link><br/>
     <Link to='/login'>Login</Link>
     </div>
     </div>
