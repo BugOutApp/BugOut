@@ -15,6 +15,7 @@ export default function Signup(props) {
     this.setState({
       [name]: value
     });
+    
   };
 
   const handleSubmit = event => {
