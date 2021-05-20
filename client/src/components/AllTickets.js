@@ -1,14 +1,22 @@
-import { React, useState, useEffect } from 'react';
+import { React, useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 export default function AllTickets() {
 
   const [tickets, setTickets] = useState([])
+  const [ queries, setQueries] = useState ({
+    status: '',
+    category: '',
+    ticketType: '',
+    priority: '',
+  })
+  const [updatedAt, setDate] = useState(false)
 
   useEffect(() => {
-    getData()
-  }, [])
+    getData() 
+  },[])
+
 
  const getData = () => {
     axios
@@ -22,13 +30,46 @@ export default function AllTickets() {
       });
   };
 
-  const ticketsList = tickets.map(ticket => {
+
+  const handleChange = (event) => {
+      //event.persist();
+      const name = event.target.name
+    const value = event.target.value
+    setQueries(queries => ({
+      ...queries,
+      [name]: value,
+    }));
+  };
+
+
+  const filteredTickets = tickets.filter(ticket => {
+    console.log(!queries.status)
+    return ((ticket.category === queries.category) || !queries.category)
+    &&
+    ((ticket.status === queries.status) || !queries.status)
+    &&
+    ((ticket.ticketType === queries.ticketType) || !queries.ticketType)
+    &&
+    ((ticket.priority === queries.priority) || !queries.priority)
+  })
+
+
+  useMemo(() => {
+    console.log(!updatedAt)
+    if(!updatedAt) return tickets;
+    return filteredTickets.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+  }, [filteredTickets, tickets, updatedAt]);
+
+
+  const ticketsList = filteredTickets.map(ticket => {
     return (
       <tr key={ticket._id}>
         <td>{ticket.ticketName}</td>
         <td>{ticket.status}</td>
         <td>{ticket.updatedAt}</td>
         <td>{ticket.priority}</td>
+        <td>{ticket.ticketType}</td>
+        <td>{ticket.category}</td>
       </tr>
     )
   })
@@ -42,10 +83,10 @@ export default function AllTickets() {
     <select
     name="status"
     id="status"
-    // value={tickets.status}
-    // onChange={handleChange}
+    value={queries.status}
+    onChange={handleChange}
   >
-    <option defaultValue>All</option>
+    <option defaultValue></option>
     <option value='new'>New</option>
     <option value='open'>Open</option>
     <option value='in progress'>In Progress</option>
@@ -58,19 +99,51 @@ export default function AllTickets() {
     <select
     name="category"
     id="category"
-    // value={tickets.category}
-    // onChange={handleChange}
+    value={queries.category}
+    onChange={handleChange}
   >
     <option defaultValue></option>
     <option value='frontend'>Frontend</option>
-    <option value='backend'>Frontend</option>
+    <option value='backend'>Backend</option>
     <option value='design'>Design</option>
     <option value='other'>Other</option>
   </select>
   </button>
 
   <span>  </span>
-  <button /*onClick={}*/ >Created At</button>
+  <button onClick={() => setDate (!updatedAt)} >Last Updated</button>
+
+  <span>Type</span>
+    <button>
+    <select
+    name="ticketType"
+    id="ticketType"
+    value={queries.ticketType}
+    onChange={handleChange}
+  >
+    <option defaultValue></option>
+    <option value='task'>Task</option>
+    <option value='bug'>Bug</option>
+    <option value='request'>Request</option>
+    <option value='other'>Other</option>
+  </select>
+  </button>
+
+  <span>Priority</span>
+    <button>
+    <select
+    name="priority"
+    id="priority"
+    value={queries.priority}
+    onChange={handleChange}
+  >
+    <option defaultValue></option>
+    <option value='P0'>P0</option>
+    <option value='P1'>P1</option>
+    <option value='P2'>P2</option>
+    <option value='P3'>P3</option>
+  </select>
+  </button>
  
     </div>
 
@@ -79,8 +152,10 @@ export default function AllTickets() {
       <tr>
         <th>Name</th>
         <th>Status</th>
-        <th>Last update</th>
+        <th>Updated At</th>
         <th>Priority</th>
+        <th>Type</th>
+        <th>Category</th>
       </tr>
     </thead>
       <tbody>
