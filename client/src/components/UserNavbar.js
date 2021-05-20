@@ -14,7 +14,7 @@ const UserNavbar = props => {
   console.log(user)
   return (
     <div className='UserNavbar'>
-      <h2>user:</h2>
+      {/* <h2>user:</h2> */}
     </div>
   )
 }

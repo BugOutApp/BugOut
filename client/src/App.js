@@ -20,7 +20,6 @@ function App(props) {
         user={user}
         setUser={setUser} />
       <Route
-      <Route
         exact path = "/"
         component={Home}
       /> 
