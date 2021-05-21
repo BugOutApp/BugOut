@@ -1,6 +1,7 @@
 import { React, useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 export default function AllTickets() {
 
@@ -62,14 +63,16 @@ export default function AllTickets() {
 
 
   const ticketsList = filteredTickets.map(ticket => {
+      let date = moment(ticket.updatedAt).format('DD-MM-YYYY')
     return (
       <tr key={ticket._id}>
         <td>{ticket.ticketName}</td>
         <td>{ticket.status}</td>
-        <td>{ticket.updatedAt}</td>
+        <td>{date}</td>
         <td>{ticket.priority}</td>
         <td>{ticket.ticketType}</td>
         <td>{ticket.category}</td>
+        <td><button><Link style={{ 'text-decoration': 'none'}} to={`/tickets/${ticket._id}`}>View</Link></button></td>
       </tr>
     )
   })
