@@ -2,6 +2,7 @@ import { React, useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+
 export default function AllTickets() {
 
   const [tickets, setTickets] = useState([])
@@ -60,16 +61,31 @@ export default function AllTickets() {
     return filteredTickets.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
   }, [filteredTickets, tickets, updatedAt]);
 
+  const formattedDate = (date) => {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
 
   const ticketsList = filteredTickets.map(ticket => {
+      let date = formattedDate(ticket.updatedAt)
     return (
       <tr key={ticket._id}>
         <td>{ticket.ticketName}</td>
         <td>{ticket.status}</td>
-        <td>{ticket.updatedAt}</td>
+        <td>{date}</td>
         <td>{ticket.priority}</td>
         <td>{ticket.ticketType}</td>
         <td>{ticket.category}</td>
+        <td><button><Link style={{ 'textDecoration': 'none'}} to={`/tickets/${ticket._id}`}>View</Link></button></td>
       </tr>
     )
   })

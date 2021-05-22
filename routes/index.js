@@ -77,7 +77,6 @@ router.patch('/tickets/:id', (req, res, next) => {
     priority,
     assignedTo,
     status,
-    lastUpdated,
     dueDate,
     comments,
   } = req.body;
@@ -91,7 +90,6 @@ router.patch('/tickets/:id', (req, res, next) => {
       priority,
       assignedTo,
       status,
-      lastUpdated,
       dueDate,
       comments,
     },

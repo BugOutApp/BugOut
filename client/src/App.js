@@ -1,12 +1,13 @@
 import { React, useState } from 'react';
 import './App.css';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import UserNavbar from './components/UserNavbar'
 import Home from './components/Home';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import CreateTicket from './components/CreateTicket';
 import AllTickets from './components/AllTickets';
+import EditTicket from './components/EditTicket';
 
 console.log('app loading')
 
@@ -35,10 +36,16 @@ function App(props) {
         exact path = '/tickets'
         component={AllTickets}
       /> 
+      <Switch>
     <Route 
     exact path='/tickets/new'
     component={CreateTicket}
     />
+    <Route
+    exact path='/tickets/:id'
+    component={EditTicket}
+    />
+    </Switch>
     </div>
     
   );
