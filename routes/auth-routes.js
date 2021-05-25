@@ -6,37 +6,44 @@ const User = require('../models/User.model');
 
 // Signup route
 router.post('/signup', (req, res) => {
-  const { username, password } = req.body;
+  const {
+    email, password, firstname, lastname,
+  } = req.body;
 
   if (!password || password.length < 8) {
     return res
       .status(400)
       .json({ message: 'Your password must be 8 char. min.' });
   }
-  if (!username) {
-    return res.status(400).json({ message: 'Your username cannot be empty' });
+  if (!email) {
+    return res.status(400).json({ message: 'Your email cannot be empty' });
   }
 
-  User.findOne({ username })
+  // check if username exists in database -> show message
+  User.findOne({ email })
     .then((found) => {
       if (found) {
         return res
           .status(400)
-          .json({ message: 'This username is already taken' });
+          .json({ message: 'This email is already taken' });
       }
 
+      // hash the password, create the user and send the user to the client
       const salt = bcrypt.genSaltSync();
       const hash = bcrypt.hashSync(password, salt);
 
-      return User.create({ username, password: hash }).then(
+      return User.create({
+        email, password: hash, firstname, lastname,
+      }).then(
         (dbUser) => {
+          // login with passport:
           req.login(dbUser, (err) => {
             if (err) {
               return res
                 .status(500)
                 .json({ message: 'Error while attempting to login' });
             }
-            res.json(dbUser);
+            return res.status(200).json(dbUser);
           });
         },
       );
@@ -55,8 +62,8 @@ router.post('/login', (req, res) => {
     if (!user) {
       return res.status(400).json({ message: 'Wrong credentials' });
     }
-    req.login(user, (err) => {
-      if (err) {
+    req.login(user, (error) => {
+      if (error) {
         return res
           .status(500)
           .json({ message: 'Error while attempting to login' });

@@ -5,6 +5,7 @@ function useInput(initialValue){
   const [value, setValue] = useState(initialValue);
   
   function handleChange(event){
+    console.log(event.target.value)
     setValue(event.target.value);
   }
 
@@ -13,25 +14,24 @@ function useInput(initialValue){
 
 export default function Signup(props) {
 
-  const [email, setEmail] = useInput();
-  const [password, setPassword] = useInput();
-  const [firstname, setFirstname] = useInput();
-  const [lastname, setLastname] = useInput();
-  const [message, setMessage] = useInput()
+  const [email, setEmail] = useInput('');
+  const [password, setPassword] = useInput('');
+  const [firstname, setFirstname] = useInput('');
+  const [lastname, setLastname] = useInput('');
+  const [message, setMessage] = useInput('')
 
   const handleSubmit = event => {
     event.preventDefault();
-    console.log(email, password, firstname, lastname)
+    console.log('email:', email, 'password:', password, 'firstname:', firstname, 'lastname:', lastname)
     signup(email, password, firstname, lastname).then(data => {
       if (data) {
         console.log(data);
-        setMessage(data);
-        setEmail('');
-        setPassword('');
-        setFirstname('');
-        setLastname('')
+        // setMessage(data);
+        // setEmail('');
+        // setPassword('');
+        // setFirstname('');
+        // setLastname('')
       } else {
-        props.useState(data);
         props.history.push('/dashboard');
       }
     });
