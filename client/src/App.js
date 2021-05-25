@@ -6,6 +6,8 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Dashboard from './components/Dashboard'
+import CreateTicket from './components/CreateTicket';
+import AllTickets from './components/AllTickets';
 
 console.log('app loading')
 
@@ -29,11 +31,19 @@ function App(props) {
       <Route
         exact path = "/signup"
         component={Signup}
+      />
+     <Route
+        exact path = '/tickets'
+        component={AllTickets}
       /> 
       <Route
         exact path = "/dashboard"
         component={Dashboard}
-      /> 
+      />
+      <Route 
+        exact path='/tickets/new'
+        component={CreateTicket}
+      />
     </div>
     
   );

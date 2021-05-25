@@ -1,4 +1,3 @@
-const express = require('express');
 const router = require('express').Router();
 const passport = require('passport');
 const bcrypt = require('bcrypt');
@@ -110,6 +109,7 @@ router.get(
   '/auth/google/callback',
   passport.authenticate('google', {
     successRedirect: '/private-page',
+    // eslint-disable-next-line max-len
     failureRedirect: '/login', // here you would redirect to the login page using traditional login approach
   }),
 );
