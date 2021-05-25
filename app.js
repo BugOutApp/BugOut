@@ -1,5 +1,7 @@
 const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const bcrypt = require('bcrypt');
 
 const cors = require('cors');
 
@@ -101,6 +103,26 @@ passport.use(
         .catch((err) => done(err)); // closes User.findOne()
     },
   ),
+  new LocalStrategy((username, password, done) => {
+    // login
+    User.findOne({ username })
+      .then((userFromDB) => {
+        if (userFromDB === null) {
+          // there is no user with this username
+          done(null, false, { message: 'Wrong Credentials' });
+        } else if (!bcrypt.compareSync(password, userFromDB.password)) {
+          // the password is not matching
+          done(null, false, { message: 'Wrong Credentials' });
+        } else {
+          // the userFromDB should now be logged in
+          done(null, userFromDB);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }),
+
 );
 
 app.use(passport.initialize());
@@ -110,7 +132,7 @@ app.use(passport.session());
 
 // 👇 Start handling routes here
 // Contrary to the views version, all routes are controled from the routes/index.js
-const index = require('./routes/index');
+const index = require('./routes');
 
 app.use('/api', index);
 

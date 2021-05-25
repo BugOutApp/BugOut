@@ -1,7 +1,9 @@
-const router = require('express').Router();
+const express = require('express');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const User = require('../models/User.model');
+
+const router = express.Router();
 
 // Signup route
 router.post('/signup', (req, res) => {
@@ -97,7 +99,7 @@ router.get('/login/success', (req, res) => {
 
 // auth with google
 router.get(
-  '/auth/google',
+  '/google',
   passport.authenticate('google', {
     scope: [
       'https://www.googleapis.com/auth/userinfo.profile',
@@ -106,7 +108,7 @@ router.get(
   }),
 );
 router.get(
-  '/auth/google/callback',
+  '/google/callback',
   passport.authenticate('google', {
     successRedirect: '/private-page',
     // eslint-disable-next-line max-len

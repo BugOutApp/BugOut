@@ -30,7 +30,7 @@ function App(props) {
       />
       <Route
         exact path = "/signup"
-        component={Signup}
+        render={props => <Signup setUser={setUser} {...props} />}
       />
      <Route
         exact path = '/tickets'
