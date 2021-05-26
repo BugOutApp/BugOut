@@ -30,7 +30,7 @@ export default function Signup(props) {
       } else {
         setUser(data)
         console.log(user)
-        // props.history.push('/dashboard');
+        props.history.push('/dashboard');
       }
     });
   };

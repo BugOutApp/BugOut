@@ -17,10 +17,12 @@ router.post('/signup', (req, res) => {
       .json({ message: 'Your password must be 8 char. min.' });
   }
   if (!email) {
-    return res.status(400).json({ message: 'Your email cannot be empty' });
+    return res
+      .status(400)
+      .json({ message: 'Your email cannot be empty' });
   }
 
-  // check if username exists in database -> show message
+  // check if email exists in database -> show message
   User.findOne({ email })
     .then((found) => {
       if (found) {
@@ -61,7 +63,7 @@ router.post('/login', (req, res) => {
       return res.status(500).json({ message: 'Error while authenticating' });
     }
     if (!user) {
-      return res.status(400).json({ message: 'Wrong credentials' });
+      return res.status(400).json({ message: 'User does not exist' });
     }
     req.login(user, (error) => {
       if (error) {

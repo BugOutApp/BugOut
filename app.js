@@ -47,7 +47,7 @@ app.use(
     // even if the session was never modified during the request.
     resave: true,
     store: new MongoStore({
-      // mongooseConnection: mongoose.connection,
+      mongooseConnection: mongoose.connection,
       url: 'mongodb://localhost:27017',
     }),
   }),
@@ -77,42 +77,42 @@ passport.deserializeUser((id, done) => {
 });
 
 passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_CLIENTID,
-      clientSecret: process.env.GOOGLE_CLIENTSECRET,
-      callbackURL: '/auth/google/callback',
-    },
-    (accessToken, refreshToken, profile, done) => {
-      // to see the structure of the data in received response:
-      console.log('Google account details:', profile);
+  // new GoogleStrategy(
+  //   {
+  //     clientID: process.env.GOOGLE_CLIENTID,
+  //     clientSecret: process.env.GOOGLE_CLIENTSECRET,
+  //     callbackURL: '/auth/google/callback',
+  //   },
+  //   (accessToken, refreshToken, profile, done) => {
+  //     // to see the structure of the data in received response:
+  //     console.log('Google account details:', profile);
 
-      User.findOne({ googleID: profile.id })
-        .then((user) => {
-          if (user) {
-            done(null, user);
-            return;
-          }
+  //     User.findOne({ googleID: profile.id })
+  //       .then((user) => {
+  //         if (user) {
+  //           done(null, user);
+  //           return;
+  //         }
 
-          User.create({ googleID: profile.id })
-            .then((newUser) => {
-              done(null, newUser);
-            })
-            .catch((err) => done(err)); // closes User.create()
-        })
-        .catch((err) => done(err)); // closes User.findOne()
-    },
-  ),
-  new LocalStrategy((username, password, done) => {
+  //         User.create({ googleID: profile.id })
+  //           .then((newUser) => {
+  //             done(null, newUser);
+  //           })
+  //           .catch((err) => done(err)); // closes User.create()
+  //       })
+  //       .catch((err) => done(err)); // closes User.findOne()
+  //   },
+  // ),
+  new LocalStrategy((email, password, done) => {
     // login
-    User.findOne({ username })
+    User.findOne({ email })
       .then((userFromDB) => {
         if (userFromDB === null) {
-          // there is no user with this username
-          done(null, false, { message: 'Wrong Credentials' });
+          // there is no user with this email
+          done(null, false, { message: 'This email does not exist in the database' });
         } else if (!bcrypt.compareSync(password, userFromDB.password)) {
           // the password is not matching
-          done(null, false, { message: 'Wrong Credentials' });
+          done(null, false, { message: 'Wrong password' });
         } else {
           // the userFromDB should now be logged in
           done(null, userFromDB);
