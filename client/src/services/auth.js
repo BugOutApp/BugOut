@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const signup = (email, password, firstname, lastname) => {
   return axios
-    .post('http://localhost:5005/api/auth/signup', { email, password, firstname, lastname})
+    .post('/api/auth/signup', { email, password, firstname, lastname})
     .then(response => {
       // console.log(response)
       return response.data;

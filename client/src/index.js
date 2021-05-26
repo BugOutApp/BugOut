@@ -6,6 +6,8 @@ import App from './App';
 import axios from 'axios';
 // import reportWebVitals from './reportWebVitals';
 
+axios.defaults.baseURL = 'http://localhost:5005';
+
 console.log('index loading')
 
 axios.get('/api/auth/loggedin')
