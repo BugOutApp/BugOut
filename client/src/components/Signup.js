@@ -22,19 +22,15 @@ export default function Signup(props) {
 
   const handleSubmit = event => {
     event.preventDefault();
-    console.log('email:', email, 'password:', password, 'firstname:', firstname, 'lastname:', lastname)
+    // console.log('email:', email, 'password:', password, 'firstname:', firstname, 'lastname:', lastname)
     signup(email, password, firstname, lastname).then(data => {
       if (data.message) {
-        // console.log(data.message);
+        console.log(data.message);
         setMessage(data.message);
-        // setEmail('');
-        // setPassword('');
-        // setFirstname('');
-        // setLastname('')
       } else {
         setUser(data)
         console.log(user)
-        props.history.push('/dashboard');
+        // props.history.push('/dashboard');
       }
     });
   };

@@ -11,10 +11,10 @@ const handleLogout = props => {
 
 const UserNavbar = props => {
   const [user, setUser] = useState(props.user)
-  console.log(user)
+  console.log(user.firstname)
   return (
     <div className='UserNavbar'>
-      <h2>user:</h2>
+      <h2>user: </h2>
     </div>
   )
 }
