@@ -65,7 +65,7 @@ router.post('/login', (req, res) => {
     if (!user) {
       return res.status(400).json({ message: 'User does not exist' });
     }
-    req.login(user, (error) => {
+    return req.login(user, (error) => {
       if (error) {
         return res
           .status(500)
