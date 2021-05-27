@@ -85,6 +85,7 @@ router.post('/signup', (req, res) => {
 // });
 
 router.post('/login', (req, res, next) => {
+  console.log('req.body.email:', req.body.email);
   passport.authenticate('local', (err, user) => {
     if (err) {
       return res.status(500).json({ message: 'Error while authenticating' });
