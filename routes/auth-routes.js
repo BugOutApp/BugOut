@@ -5,6 +5,14 @@ const User = require('../models/User.model');
 
 const router = express.Router();
 
+// Get all users
+router.get('/users', (req, res) => {
+  User.find().then((users) => {
+    console.log(users);
+    res.status(200).json(users);
+  });
+});
+
 // Signup route
 router.post('/signup', (req, res) => {
   const {
@@ -57,23 +65,42 @@ router.post('/signup', (req, res) => {
 });
 
 // Login route
-router.post('/login', (req, res) => {
+// router.post('/login', (req, res) => {
+//   passport.authenticate('local', (err, user) => {
+//     if (err) {
+//       return res.status(500).json({ message: 'Error while authenticating' });
+//     }
+//     if (!user) {
+//       return res.status(400).json({ message: 'User does not exist' });
+//     }
+//     return req.login(user, (error) => {
+//       if (error) {
+//         return res
+//           .status(500)
+//           .json({ message: 'Error while attempting to login' });
+//       }
+//       return res.json(user);
+//     });
+//   })(req, res);
+// });
+
+router.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, user) => {
     if (err) {
       return res.status(500).json({ message: 'Error while authenticating' });
     }
     if (!user) {
-      return res.status(400).json({ message: 'User does not exist' });
+      return res.status(400).json({ message: 'Wrong credentials' });
     }
-    return req.login(user, (error) => {
+    req.login(user, (error) => {
       if (error) {
         return res
           .status(500)
           .json({ message: 'Error while attempting to login' });
       }
-      return res.json(user);
+      return res.status(200).json(user);
     });
-  })(req, res);
+  })(req, res, next);
 });
 
 // Delete user route
@@ -113,8 +140,8 @@ router.get(
   '/google/callback',
   passport.authenticate('google', {
     successRedirect: '/private-page',
-    // eslint-disable-next-line max-len
-    failureRedirect: '/login', // here you would redirect to the login page using traditional login approach
+    // here you would redirect to the login page using traditional login approach
+    failureRedirect: '/login',
   }),
 );
 

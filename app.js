@@ -105,7 +105,7 @@ passport.use(
   // ),
   new LocalStrategy((email, password, done) => {
     // login
-    User.findOne({ email })
+    User.findOne({ email: email })
       .then((userFromDB) => {
         if (userFromDB === null) {
           // there is no user with this email

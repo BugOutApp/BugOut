@@ -15,6 +15,7 @@ const UserNavbar = props => {
   return (
     <div className='UserNavbar'>
       <h2>user: </h2>
+      <Link to='/'>Home</Link>
     </div>
   )
 }
