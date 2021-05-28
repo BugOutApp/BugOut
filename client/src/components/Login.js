@@ -1,6 +1,7 @@
 import {React, useState} from 'react'
 import { Link } from 'react-router-dom'
 import { allUsers, login } from '../services/auth'
+// import {user, setUser} from '../App'
 
 // console.log('login loading')
 
@@ -18,22 +19,17 @@ export default function Login(props) {
   const [email, setEmail] = useInput('');
   const [password, setPassword] = useInput('');
   const [message, setMessage] = useState('');
-  const [user, setUser] = useState('')
+  
+  console.log(props.user)
 
   const handleSubmit = event => {
     event.preventDefault();
-    console.log('email:', email, 'password:', password)
-    // allUsers().then(data => {
-    //   console.log(data)
-    // })
     login(email, password).then(data => {
       if (data.message) {
-        // console.log(data.message);
         setMessage(data.message);
       } else {
-        setUser(data)
-        console.log(user);
-        props.history.push('/dashboard');
+        props.setUser(data)
+        // this.props.history.push('/dashboard');
       }
     });
   };

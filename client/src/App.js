@@ -26,7 +26,8 @@ function App(props) {
       /> 
       <Route
         exact path="/login" 
-        component={Login}
+        // component={Login}
+        render={props => <Login setUser={setUser} {...props} />}
       />
       <Route
         exact path = "/signup"
