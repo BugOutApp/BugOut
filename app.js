@@ -103,25 +103,31 @@ passport.use(
   //       .catch((err) => done(err)); // closes User.findOne()
   //   },
   // ),
-  new LocalStrategy((email, password, done) => {
+  new LocalStrategy(
+    {
+      usernameField: 'email',
+      passwordField: 'password',
+    },
+    (email, password, done) => {
     // login
-    User.findOne({ email: email })
-      .then((userFromDB) => {
-        if (userFromDB === null) {
+      User.findOne({ email })
+        .then((userFromDB) => {
+          if (userFromDB === null) {
           // there is no user with this email
-          done(null, false, { message: 'This email does not exist in the database' });
-        } else if (!bcrypt.compareSync(password, userFromDB.password)) {
+            done(null, false, { message: 'This email does not exist in the database' });
+          } else if (!bcrypt.compareSync(password, userFromDB.password)) {
           // the password is not matching
-          done(null, false, { message: 'Wrong password' });
-        } else {
+            done(null, false, { message: 'Wrong password' });
+          } else {
           // the userFromDB should now be logged in
-          done(null, userFromDB);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }),
+            done(null, userFromDB);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  ),
 
 );
 
