@@ -11,21 +11,19 @@ const handleLogout = props => {
 
 const UserNavbar = props => {
   const [user, setUser] = useState(props.user)
-  console.log(props.user)
   return (
     <div className='UserNavbar'>
-      <h2>user: </h2>
       <Link to='/'>Home</Link>
-      {/* {props.user ? ( */}
+      {props.user ? (
         <Link to='/' onClick={() => handleLogout(props)}>
-        Logout
+        Logout {props.user.firstname}
       </Link>
-      {/* ) : ( */}
+      ) : (
         <div className='noUserNavbar'>
         <Link to='/signup'>Signup</Link>
         <Link to='/login'>Login</Link>
         </div>
-      {/* )} */}
+      )}
     </div>
   )
 }

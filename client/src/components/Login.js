@@ -29,7 +29,7 @@ export default function Login(props) {
         setMessage(data.message);
       } else {
         props.setUser(data)
-        // this.props.history.push('/dashboard');
+        props.history.push('/dashboard');
       }
     });
   };
