@@ -25,7 +25,7 @@ export default function Signup(props) {
       if (data.message) {
         setMessage(data.message);
       } else {
-        props.user(data)
+        props.setUser(data)
         props.history.push('/dashboard');
       }
     });

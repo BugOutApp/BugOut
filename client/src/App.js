@@ -31,19 +31,23 @@ function App(props) {
         exact path="/signup"
         render={props => <Signup setUser={setUser} {...props} />}
       />
-     <Route
+     <ProtectedRoute
         exact path="/tickets"
+        user={user}
         component={AllTickets}
+        redirectPath="/login"
       /> 
       <ProtectedRoute
         exact path="/dashboard"
         user={user}
         component={Dashboard}
-        redirectPath='/login'
+        redirectPath="/login"
       />
-      <Route 
+      <ProtectedRoute 
         exact path="/tickets/new"
+        user={user}
         component={CreateTicket}
+        redirectPath="/login"
       />
     </div>
     

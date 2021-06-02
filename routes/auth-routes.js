@@ -8,7 +8,6 @@ const router = express.Router();
 // Get all users
 router.get('/users', (req, res) => {
   User.find().then((users) => {
-    console.log(users);
     res.status(200).json(users);
   });
 });
@@ -86,49 +85,64 @@ router.post('/login', (req, res, next) => {
 });
 
 // Delete user route
-router.get('/logout', (req, res) => {
-  req.session.destroy();
-  req.logout();
-  console.log(req.session);
-  res.status(200)
-    .json({ message: 'Successful logout' });
-  res.redirect('/signup');
+// router.delete('/logout', (req, res, next) => {
+router.delete('/logout', (req, res) => {
+  console.log('req.session:', req.session);
+  if (req.session) {
+    req.session.destroy((err) => {
+      if (err) {
+        res.status(400).send('Unable to log out');
+      } else {
+        res.send('Logout successful');
+      }
+    });
+  } else {
+    res.end();
+  }
 });
+
+// req.logout();
+// delete req.session;
+// req.session.destroy((err) => {
+//   if (err) return next(err);
+//   console.log('req.session:', req.session);
+//   return res.status(200).send('logged out');
+// });
 
 // returns the logged in user
 router.get('/loggedin', (req, res) => {
   res.json(req.user);
 });
 
-// when login is successful, retrieve user info
-router.get('/login/success', (req, res) => {
-  if (req.user) {
-    res.json({
-      success: true,
-      message: 'user has successfully authenticated',
-      user: req.user,
-      cookies: req.cookies,
-    });
-  }
-});
+// // when login is successful, retrieve user info
+// router.get('/login/success', (req, res) => {
+//   if (req.user) {
+//     res.json({
+//       success: true,
+//       message: 'user has successfully authenticated',
+//       user: req.user,
+//       cookies: req.cookies,
+//     });
+//   }
+// });
 
 // auth with google
-router.get(
-  '/google',
-  passport.authenticate('google', {
-    scope: [
-      'https://www.googleapis.com/auth/userinfo.profile',
-      'https://www.googleapis.com/auth/userinfo.email',
-    ],
-  }),
-);
-router.get(
-  '/google/callback',
-  passport.authenticate('google', {
-    successRedirect: '/private-page',
-    // here you would redirect to the login page using traditional login approach
-    failureRedirect: '/login',
-  }),
-);
+// router.get(
+//   '/google',
+//   passport.authenticate('google', {
+//     scope: [
+//       'https://www.googleapis.com/auth/userinfo.profile',
+//       'https://www.googleapis.com/auth/userinfo.email',
+//     ],
+//   }),
+// );
+// router.get(
+//   '/google/callback',
+//   passport.authenticate('google', {
+//     successRedirect: '/private-page',
+//     // here you would redirect to the login page using traditional login approach
+//     failureRedirect: '/login',
+//   }),
+// );
 
 module.exports = router;
