@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
@@ -60,7 +62,6 @@ const User = require('./models/User.model');
 
 // we serialize only the `_id` field of the user to keep the information stored minimum
 passport.serializeUser((user, done) => {
-  // eslint-disable-next-line no-underscore-dangle
   done(null, user._id);
 });
 

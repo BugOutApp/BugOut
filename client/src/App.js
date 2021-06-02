@@ -1,6 +1,7 @@
-import { React, useState } from 'react';
+import { React, useState, Redirect } from 'react';
 import './App.css';
 import { Route } from 'react-router-dom';
+import ProtectedRoute from './components/ProtectedRoute'
 import UserNavbar from './components/UserNavbar'
 import Home from './components/Home';
 import Login from './components/Login';
@@ -9,12 +10,10 @@ import Dashboard from './components/Dashboard'
 import CreateTicket from './components/CreateTicket';
 import AllTickets from './components/AllTickets';
 
-console.log('app loading')
-
 function App(props) {
 
   const [user, setUser] = useState(props.user)
-  console.log(props.user)
+  console.log(user)
   return (
     <div className="App">
       <UserNavbar
@@ -26,23 +25,24 @@ function App(props) {
       /> 
       <Route
         exact path="/login" 
-        // component={Login}
         render={props => <Login setUser={setUser} {...props} />}
       />
       <Route
-        exact path = "/signup"
+        exact path="/signup"
         render={props => <Signup setUser={setUser} {...props} />}
       />
      <Route
-        exact path = '/tickets'
+        exact path="/tickets"
         component={AllTickets}
       /> 
-      <Route
-        exact path = "/dashboard"
+      <ProtectedRoute
+        exact path="/dashboard"
+        user={user}
         component={Dashboard}
+        redirectPath='/login'
       />
       <Route 
-        exact path='/tickets/new'
+        exact path="/tickets/new"
         component={CreateTicket}
       />
     </div>

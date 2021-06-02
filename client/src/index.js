@@ -8,8 +8,6 @@ import axios from 'axios';
 
 axios.defaults.baseURL = 'http://localhost:5005';
 
-console.log('index loading')
-
 axios.get('/api/auth/loggedin')
   .then(response => {
     const user = response.data;
@@ -19,15 +17,16 @@ axios.get('/api/auth/loggedin')
       </BrowserRouter>,
       document.getElementById('root')
     );
-  }).catch(error => {
-    ReactDOM.render(
-      <BrowserRouter>
-        <App user={{}} />
-      </BrowserRouter>,
-      document.getElementById('root')
-    );
-    console.log(error)
   })
+  // .catch(error => {
+  //   ReactDOM.render(
+  //     <BrowserRouter>
+  //       <App user={{}} />
+  //     </BrowserRouter>,
+  //     document.getElementById('root')
+  //   );
+  //   console.log(error)
+  // })
 
   // ReactDOM.render(
   //   <BrowserRouter>

@@ -64,28 +64,9 @@ router.post('/signup', (req, res) => {
     });
 });
 
-// Login route
-// router.post('/login', (req, res) => {
-//   passport.authenticate('local', (err, user) => {
-//     if (err) {
-//       return res.status(500).json({ message: 'Error while authenticating' });
-//     }
-//     if (!user) {
-//       return res.status(400).json({ message: 'User does not exist' });
-//     }
-//     return req.login(user, (error) => {
-//       if (error) {
-//         return res
-//           .status(500)
-//           .json({ message: 'Error while attempting to login' });
-//       }
-//       return res.json(user);
-//     });
-//   })(req, res);
-// });
-
 router.post('/login', (req, res, next) => {
-  console.log('req.body.email:', req.body.email);
+  // console.log('req.body.email:', req.body.email);
+  console.log(req.session);
   passport.authenticate('local', (err, user) => {
     if (err) {
       return res.status(500).json({ message: 'Error while authenticating' });
@@ -105,9 +86,13 @@ router.post('/login', (req, res, next) => {
 });
 
 // Delete user route
-router.delete('/logout', (req, res) => {
+router.get('/logout', (req, res) => {
+  req.session.destroy();
   req.logout();
-  res.json({ message: 'Successful logout' });
+  console.log(req.session);
+  res.status(200)
+    .json({ message: 'Successful logout' });
+  res.redirect('/signup');
 });
 
 // returns the logged in user

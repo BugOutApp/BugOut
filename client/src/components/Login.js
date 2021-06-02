@@ -29,6 +29,8 @@ export default function Login(props) {
         setMessage(data.message);
       } else {
         props.setUser(data)
+        // localStorage.setItem('user', data)
+        // console.log(localStorage)
         props.history.push('/dashboard');
       }
     });
@@ -38,7 +40,7 @@ export default function Login(props) {
   return (
     <div>
     <h1>Login.js</h1>
-    <div class='loginForm'>
+    <div className='loginForm'>
     <form onSubmit={handleSubmit}>
 
         <label>Email</label>

@@ -18,7 +18,6 @@ export default function Signup(props) {
   const [firstname, setFirstname] = useInput('');
   const [lastname, setLastname] = useInput('');
   const [message, setMessage] = useState('');
-  const [user, setUser] = useState('')
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -27,7 +26,6 @@ export default function Signup(props) {
         setMessage(data.message);
       } else {
         props.user(data)
-        console.log(user)
         props.history.push('/dashboard');
       }
     });
@@ -36,7 +34,7 @@ export default function Signup(props) {
   return (
     <div>
     <h1>User signup</h1>
-    <div class='signupForm'>
+    <div className='signupForm'>
     <form onSubmit={handleSubmit}>
 
         <label>Email</label>
