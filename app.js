@@ -50,7 +50,7 @@ app.use(
     resave: true,
     store: new MongoStore({
       mongooseConnection: mongoose.connection,
-      url: 'mongodb://localhost:27017',
+      mongoUrl: 'mongodb://localhost/BugOut',
     }),
   }),
 );
