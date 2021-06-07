@@ -11,6 +11,7 @@ const handleLogout = props => {
 
 const UserNavbar = props => {
   const [user, setUser] = useState(props.user)
+  console.log('user recieved by App.js:', props.user)
   return (
     <div className='UserNavbar'>
       <Link to='/'>Home</Link>

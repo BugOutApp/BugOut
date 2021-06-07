@@ -30,7 +30,7 @@ router.post('/signup', (req, res) => {
   }
 
   // check if email exists in database -> show message
-  User.findOne({ email })
+  return User.findOne({ email })
     .then((found) => {
       if (found) {
         return res
@@ -65,7 +65,7 @@ router.post('/signup', (req, res) => {
 
 router.post('/login', (req, res, next) => {
   // console.log('req.body.email:', req.body.email);
-  console.log(req.session);
+  console.log(req.sessionID);
   passport.authenticate('local', (err, user) => {
     if (err) {
       return res.status(500).json({ message: 'Error while authenticating' });
@@ -73,7 +73,7 @@ router.post('/login', (req, res, next) => {
     if (!user) {
       return res.status(400).json({ message: 'Wrong credentials' });
     }
-    req.login(user, (error) => {
+    return req.login(user, (error) => {
       if (error) {
         return res
           .status(500)
@@ -87,19 +87,26 @@ router.post('/login', (req, res, next) => {
 // Delete user route
 // router.delete('/logout', (req, res, next) => {
 router.delete('/logout', (req, res) => {
-  console.log('req.session:', req.session);
-  if (req.session) {
-    req.session.destroy((err) => {
-      if (err) {
-        res.status(400).send('Unable to log out');
-      } else {
-        res.send('Logout successful');
-      }
-    });
-  } else {
-    res.end();
-  }
+  // req.logout();
+  req.sessionStore.destroy(req.sessionID, (error) => {
+    if (error) {
+      console.log(error);
+    }
+  });
 });
+
+// console.log('req.session:', req.session);
+// if (req.session) {
+//   req.session.destroy((err) => {
+//     if (err) {
+//       res.status(400).send('Unable to log out');
+//     } else {
+//       res.send('Logout successful');
+//     }
+//   });
+// } else {
+//   res.end();
+// }
 
 // req.logout();
 // delete req.session;

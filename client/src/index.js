@@ -10,6 +10,7 @@ axios.defaults.baseURL = 'http://localhost:5005';
 
 axios.get('/api/auth/loggedin')
   .then(response => {
+    console.log('user recieved by index.js:', response.data)
     const user = response.data;
     ReactDOM.render(
       <BrowserRouter>

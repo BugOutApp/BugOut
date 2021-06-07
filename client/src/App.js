@@ -13,7 +13,7 @@ import AllTickets from './components/AllTickets';
 function App(props) {
 
   const [user, setUser] = useState(props.user)
-  console.log(user)
+  console.log('user recieved by App.js:', user)
   return (
     <div className="App">
       <UserNavbar
