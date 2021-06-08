@@ -87,12 +87,9 @@ router.post('/login', (req, res, next) => {
 // Delete user route
 // router.delete('/logout', (req, res, next) => {
 router.delete('/logout', (req, res) => {
-  // req.logout();
-  req.sessionStore.destroy(req.sessionID, (error) => {
-    if (error) {
-      console.log(error);
-    }
-  });
+  req.logout();
+  req.session.destroy();
+  res.status(200).json({ message: 'Sucessful logout' });
 });
 
 // console.log('req.session:', req.session);

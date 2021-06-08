@@ -68,7 +68,6 @@ export default function Login(props) {
 <button type='submit'>Login</button>
 </form>
     </div>
-    <Link to="/auth/google">Login With Google</Link>
     </div>
   )
 }
