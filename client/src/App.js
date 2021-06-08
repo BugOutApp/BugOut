@@ -1,4 +1,4 @@
-import { React, useState, Redirect } from 'react';
+import { React, useState } from 'react';
 import './App.css';
 
 import { Route, Switch } from 'react-router-dom';
@@ -23,7 +23,7 @@ function App(props) {
         setUser={setUser} />
       <Route
         exact path = "/"
-        component={Home}
+        render={props => <Home setUser={setUser} user={user} {...props} />}
       /> 
       <Route
         exact path="/login" 
