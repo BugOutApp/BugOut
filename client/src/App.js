@@ -1,7 +1,9 @@
 import { React, useState, Redirect } from 'react';
 import './App.css';
-import { Route } from 'react-router-dom';
+
+import { Route, Switch } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute'
+
 import UserNavbar from './components/UserNavbar'
 import Home from './components/Home';
 import Login from './components/Login';
@@ -9,6 +11,7 @@ import Signup from './components/Signup';
 import Dashboard from './components/Dashboard'
 import CreateTicket from './components/CreateTicket';
 import AllTickets from './components/AllTickets';
+import EditTicket from './components/EditTicket';
 
 function App(props) {
   const [user, setUser] = useState(props.user)
@@ -36,18 +39,24 @@ function App(props) {
         component={AllTickets}
         redirectPath="/login"
       /> 
+
       <ProtectedRoute
         exact path="/dashboard"
         user={user}
         component={Dashboard}
         redirectPath="/login"
       />
-      <ProtectedRoute 
-        exact path="/tickets/new"
-        user={user}
-        component={CreateTicket}
-        redirectPath="/login"
-      />
+      <Switch>
+    <Route 
+    exact path='/tickets/new'
+    component={CreateTicket}
+    />
+    <Route
+    exact path='/tickets/:id'
+    component={EditTicket}
+    />
+    </Switch>
+
     </div>
     
   );

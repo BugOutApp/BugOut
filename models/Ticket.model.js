@@ -32,12 +32,11 @@ const ticketSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
-  // creationDate: Date,
   dueDate: Date,
-  // lastUpdated: [Date],
   priority: {
     type: String,
     enum: ['P0', 'P1', 'P2', 'P3'],
+    default: 'P3',
   },
   comments: [{
     user: {

@@ -12,6 +12,7 @@ const UserNavbar = props => {
   console.log('user recieved by UserNavbar:', props.user)
   return (
     <div className='UserNavbar'>
+
       {props.user ? (
         <Link to='/' onClick={() => handleLogout(props)}>
         Logout {props.user.firstname}
@@ -28,6 +29,7 @@ const UserNavbar = props => {
         </ul>
         </div>
       )}
+
     </div>
   )
 }
