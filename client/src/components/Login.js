@@ -1,9 +1,6 @@
 import {React, useState} from 'react'
 import { Link } from 'react-router-dom'
-import { allUsers, login } from '../services/auth'
-// import {user, setUser} from '../App'
-
-// console.log('login loading')
+import { login } from '../services/auth'
 
 function useInput(initialValue){
   const [value, setValue] = useState(initialValue);
@@ -29,8 +26,6 @@ export default function Login(props) {
         setMessage(data.message);
       } else {
         props.setUser(data)
-        // localStorage.setItem('user', data)
-        // console.log(localStorage)
         props.history.push('/dashboard');
       }
     });
