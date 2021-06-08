@@ -1,38 +1,32 @@
 import { React, useState } from 'react'
 import { signup } from '../services/auth'
 
+function useInput(initialValue){
+  const [value, setValue] = useState(initialValue);
+  
+  function handleChange(event){
+    setValue(event.target.value);
+  }
+
+  return [value,handleChange]
+}
+
 export default function Signup(props) {
 
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [firstname, setFirstname] = useState();
-  const [lastname, setLastname] = useState();
-  const [message, setMessage] = useState()
-
-  const handleChange = event => {
-    const { name, value } = event.target;
-
-    this.setState({
-      [name]: value
-    });
-    
-  };
+  const [email, setEmail] = useInput('');
+  const [password, setPassword] = useInput('');
+  const [firstname, setFirstname] = useInput('');
+  const [lastname, setLastname] = useInput('');
+  const [message, setMessage] = useState('');
 
   const handleSubmit = event => {
     event.preventDefault();
-
-    const { username, password } = this.state;
-
-    signup(username, password).then(data => {
+    signup(email, password, firstname, lastname).then(data => {
       if (data.message) {
-        this.setState({
-          message: data.message,
-          username: '',
-          password: ''
-        });
+        setMessage(data.message);
       } else {
-        this.props.setUser(data);
-        this.props.history.push('/projects');
+        props.setUser(data)
+        props.history.push('/dashboard');
       }
     });
   };
@@ -40,7 +34,7 @@ export default function Signup(props) {
   return (
     <div>
     <h1>User signup</h1>
-    <div class='signupForm'>
+    <div className='signupForm'>
     <form onSubmit={handleSubmit}>
 
         <label>Email</label>
@@ -48,16 +42,16 @@ export default function Signup(props) {
           type='text'
           name='email'
           value={email}
-          onChange={handleChange}
+          onChange={setEmail}
           id='email'
         />
 
         <label>Password</label>
         <input 
-          type='text'
+          type='password'
           name='password'
           value={password}
-          onChange={handleChange}
+          onChange={setPassword}
           id='password'
         />
 
@@ -66,7 +60,7 @@ export default function Signup(props) {
           type='text'
           name='firstname'
           value={firstname}
-          onChange={handleChange}
+          onChange={setFirstname}
           id='firstname'
         />
 
@@ -75,13 +69,13 @@ export default function Signup(props) {
           type='text'
           name='lastname'
           value={lastname}
-          onChange={handleChange}
+          onChange={setLastname}
           id='lastname'
         />
         
-{/* {message && (
-<Alert variant='danger'>{message}</Alert>
-)} */}
+{message && (
+<alert variant='danger'>{message}</alert>
+)}
 
 <button type='submit'>Signup</button>
 </form>

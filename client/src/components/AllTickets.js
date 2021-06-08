@@ -92,6 +92,7 @@ export default function AllTickets() {
 
   return (
     <div>
+
     {tickets.length > 0 && <h2>All tickets</h2>}
     <div>
     <span>Status</span>
@@ -179,7 +180,6 @@ export default function AllTickets() {
       </tbody>
     </table>
     
-      
     </div>
   )
 }

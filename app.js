@@ -1,5 +1,9 @@
+/* eslint-disable no-underscore-dangle */
+
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
+// const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const bcrypt = require('bcrypt');
 
 const cors = require('cors');
 
@@ -45,8 +49,8 @@ app.use(
     // even if the session was never modified during the request.
     resave: true,
     store: new MongoStore({
-      // mongooseConnection: mongoose.connection,
-      url: 'mongodb://localhost:27017',
+      mongooseConnection: mongoose.connection,
+      mongoUrl: 'mongodb://localhost/BugOut',
     }),
   }),
 );
@@ -58,7 +62,6 @@ const User = require('./models/User.model');
 
 // we serialize only the `_id` field of the user to keep the information stored minimum
 passport.serializeUser((user, done) => {
-  // eslint-disable-next-line no-underscore-dangle
   done(null, user._id);
 });
 
@@ -75,32 +78,58 @@ passport.deserializeUser((id, done) => {
 });
 
 passport.use(
-  new GoogleStrategy(
+  // new GoogleStrategy(
+  //   {
+  //     clientID: process.env.GOOGLE_CLIENTID,
+  //     clientSecret: process.env.GOOGLE_CLIENTSECRET,
+  //     callbackURL: '/auth/google/callback',
+  //   },
+  //   (accessToken, refreshToken, profile, done) => {
+  //     // to see the structure of the data in received response:
+  //     console.log('Google account details:', profile);
+
+  //     User.findOne({ googleID: profile.id })
+  //       .then((user) => {
+  //         if (user) {
+  //           done(null, user);
+  //           return;
+  //         }
+
+  //         User.create({ googleID: profile.id })
+  //           .then((newUser) => {
+  //             done(null, newUser);
+  //           })
+  //           .catch((err) => done(err)); // closes User.create()
+  //       })
+  //       .catch((err) => done(err)); // closes User.findOne()
+  //   },
+  // ),
+  new LocalStrategy(
     {
-      clientID: process.env.GOOGLE_CLIENTID,
-      clientSecret: process.env.GOOGLE_CLIENTSECRET,
-      callbackURL: '/auth/google/callback',
+      usernameField: 'email',
+      passwordField: 'password',
     },
-    (accessToken, refreshToken, profile, done) => {
-      // to see the structure of the data in received response:
-      console.log('Google account details:', profile);
-
-      User.findOne({ googleID: profile.id })
-        .then((user) => {
-          if (user) {
-            done(null, user);
-            return;
+    (email, password, done) => {
+    // login
+      User.findOne({ email })
+        .then((userFromDB) => {
+          if (userFromDB === null) {
+          // there is no user with this email
+            done(null, false, { message: 'This email does not exist in the database' });
+          } else if (!bcrypt.compareSync(password, userFromDB.password)) {
+          // the password is not matching
+            done(null, false, { message: 'Wrong password' });
+          } else {
+          // the userFromDB should now be logged in
+            done(null, userFromDB);
           }
-
-          User.create({ googleID: profile.id })
-            .then((newUser) => {
-              done(null, newUser);
-            })
-            .catch((err) => done(err)); // closes User.create()
         })
-        .catch((err) => done(err)); // closes User.findOne()
+        .catch((err) => {
+          console.log(err);
+        });
     },
   ),
+
 );
 
 app.use(passport.initialize());

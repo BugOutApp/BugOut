@@ -3,36 +3,38 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
-//import axios from 'axios';
+import axios from 'axios';
 // import reportWebVitals from './reportWebVitals';
 
-console.log('index loading')
+axios.defaults.baseURL = 'http://localhost:5005';
 
-// axios.get('/api/auth/loggedin')
-//   .then(response => {
-//     const user = response.data;
-//     ReactDOM.render(
-//       <BrowserRouter>
-//         <App user={user} />
-//       </BrowserRouter>,
-//       document.getElementById('root')
-//     );
-//   }).catch(error => {
-//     ReactDOM.render(
-//       <BrowserRouter>
-//         <App user={{}} />
-//       </BrowserRouter>,
-//       document.getElementById('root')
-//     );
-//     console.log(error)
-//   })
+axios.get('/api/auth/loggedin')
+  .then(response => {
+    console.log('user recieved by index.js:', response.data)
+    const user = response.data;
+    ReactDOM.render(
+      <BrowserRouter>
+        <App user={user} />
+      </BrowserRouter>,
+      document.getElementById('root')
+    );
+  })
+  // .catch(error => {
+  //   ReactDOM.render(
+  //     <BrowserRouter>
+  //       <App user={{}} />
+  //     </BrowserRouter>,
+  //     document.getElementById('root')
+  //   );
+  //   console.log(error)
+  // })
 
-  ReactDOM.render(
-    <BrowserRouter>
-      <App user={{name: 'Michael'}} />
-    </BrowserRouter>,
-    document.getElementById('root')
-  );
+  // ReactDOM.render(
+  //   <BrowserRouter>
+  //     <App user={{name: 'Michael'}} />
+  //   </BrowserRouter>,
+  //   document.getElementById('root')
+  // );
 
 
 // If you want to start measuring performance in your app, pass a function

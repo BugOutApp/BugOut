@@ -1,19 +1,32 @@
 import axios from 'axios';
 
-const signup = (username, password) => {
+const allUsers = () => {
   return axios
-    .post('/api/auth/signup', { username, password })
+  .get('/api/auth/users')
+  .then(response => {
+    return response.data;
+  })
+  .catch(err => {
+    console.log(err.response.data)
+  })
+}
+
+const signup = (email, password, firstname, lastname) => {
+  return axios
+    .post('/api/auth/signup', { email, password, firstname, lastname})
     .then(response => {
+      // console.log(response)
       return response.data;
     })
     .catch(err => {
+      // console.log(err)
       return err.response.data;
     });
 };
 
-const login = (username, password) => {
+const login = (email, password) => {
   return axios
-    .post('/api/auth/login', { username, password })
+    .post('/api/auth/login', { email, password })
     .then(response => {
       return response.data;
     })
@@ -33,4 +46,4 @@ const logout = () => {
     });
 };
 
-export { signup, login, logout };
+export { signup, login, logout, allUsers };
